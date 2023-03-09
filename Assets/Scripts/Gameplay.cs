@@ -19,10 +19,6 @@ public class Gameplay : MonoBehaviour
     public AudioSource tieSound;
     public AudioSource clickSound;
 
-    public Button winButton;
-    public Button loseButton;
-    public Button tieButton;
-
     private string playerCurrent = "paper";
     private string aiCurrent = "paper";
 
@@ -134,9 +130,6 @@ public class Gameplay : MonoBehaviour
                     Debug.Log("Something happened we did not expect!!!!!!");
                 }
             }
-
-            
-
             
         }
     }    
