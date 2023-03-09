@@ -1,3 +1,13 @@
+/*
+Artificial Intelligence Assignment 1 
+March 17th
+
+Andrew Waterhouse - 100744494
+Daye Fubara - 100748688
+Fardeen Faisal - 100755369
+Treyton Cowell - 100745472
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +24,7 @@ public class Gameplay : MonoBehaviour
     public GameObject PlayerPaper;
     public GameObject PlayerScissors;
 
+    //Setup sounds
     public AudioSource winSound;
     public AudioSource loseSound;
     public AudioSource tieSound;
@@ -195,9 +206,4 @@ public class Gameplay : MonoBehaviour
             AIScissors.SetActive(true);
         }
     }
-
-   
-
-    
-
 }
