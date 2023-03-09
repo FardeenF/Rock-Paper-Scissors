@@ -14,12 +14,10 @@ public class Gameplay : MonoBehaviour
     public GameObject PlayerPaper;
     public GameObject PlayerScissors;
 
-    public AudioSource audioSource;
-
-    public AudioClip clickSound;
-    public AudioClip winSound;
-    public AudioClip loseSound;
-    public AudioClip tieSound;
+    public AudioSource winSound;
+    public AudioSource loseSound;
+    public AudioSource tieSound;
+    public AudioSource clickSound;
 
     public Button winButton;
     public Button loseButton;
@@ -37,6 +35,7 @@ public class Gameplay : MonoBehaviour
     private bool hasLost = false;
     private bool hasDrawn = false; 
     
+    private bool roundDone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -49,89 +48,96 @@ public class Gameplay : MonoBehaviour
     {
         if (gameStarted == true)
         {
-            //Ties
-            if (PlayerRock.activeInHierarchy == true && AIRock.activeInHierarchy == true)
+
+            if (roundDone == false)
             {
-                mainText.text = "Tied! Play again?";
-                hasDrawn = true;
-            }
-            else if (PlayerPaper.activeInHierarchy == true && AIPaper.activeInHierarchy == true)
-            {
-                mainText.text = "Tied! Play again?";
-                hasDrawn = true;
-            }
-            else if (PlayerScissors.activeInHierarchy == true && AIScissors.activeInHierarchy == true)
-            {
-                mainText.text = "Tied! Play again?";
-                hasDrawn = true;
-            }
-            else
-            {
-                Debug.Log("Something happened we did not expect!!!!!!");
-            }
+                //Ties
+                if (PlayerRock.activeInHierarchy == true && AIRock.activeInHierarchy == true)
+                {
+                    mainText.text = "Tied! Play again?";
+                    hasDrawn = true;
+                    tieSound.Play();
+                    roundDone = true;
+                }
+                else if (PlayerPaper.activeInHierarchy == true && AIPaper.activeInHierarchy == true)
+                {
+                    mainText.text = "Tied! Play again?";
+                    hasDrawn = true;
+                    tieSound.Play();
+                    roundDone = true;
+                }
+                else if (PlayerScissors.activeInHierarchy == true && AIScissors.activeInHierarchy == true)
+                {
+                    mainText.text = "Tied! Play again?";
+                    hasDrawn = true;
+                    tieSound.Play();
+                    roundDone = true;
+                }
+                else
+                {
+                    Debug.Log("Something happened we did not expect!!!!!!");
+                }
 
 
-            //Player Wins
-            if (PlayerRock.activeInHierarchy == true && AIScissors.activeInHierarchy == true)
-            {
-                mainText.text = "You Win! Play Again?";
-                hasWon = true;
-            }
-            else if (PlayerPaper.activeInHierarchy == true && AIRock.activeInHierarchy == true)
-            {
-                mainText.text = "You Win! Play Again?";
-                hasWon = true;
-            }
-            else if (PlayerScissors.activeInHierarchy == true && AIPaper.activeInHierarchy == true)
-            {
-                mainText.text = "You Win! Play Again?";
-                hasWon = true;
-            }
-            else
-            {
-                Debug.Log("Something happened we did not expect!!!!!!");
-            }
+                //Player Wins
+                if (PlayerRock.activeInHierarchy == true && AIScissors.activeInHierarchy == true)
+                {
+                    mainText.text = "You Win! Play Again?";
+                    hasWon = true;
+                    winSound.Play();
+                    roundDone = true;
+                }
+                else if (PlayerPaper.activeInHierarchy == true && AIRock.activeInHierarchy == true)
+                {
+                    mainText.text = "You Win! Play Again?";
+                    hasWon = true;
+                    winSound.Play();
+                    roundDone = true;
+                }
+                else if (PlayerScissors.activeInHierarchy == true && AIPaper.activeInHierarchy == true)
+                {
+                    mainText.text = "You Win! Play Again?";
+                    hasWon = true;
+                    winSound.Play();
+                    roundDone = true;
+                }
+                else
+                {
+                    Debug.Log("Something happened we did not expect!!!!!!");
+                }
 
 
-            //AI Wins
-            if (AIRock.activeInHierarchy == true && PlayerScissors.activeInHierarchy == true)
-            {
-                mainText.text = "You Lose! Play Again?";
-                hasLost = true;
-            }
-            else if (AIPaper.activeInHierarchy == true && PlayerRock.activeInHierarchy == true)
-            {
-                mainText.text = "You Lose! Play Again?";
-                hasLost = true;
-            }
-            else if (AIScissors.activeInHierarchy == true && PlayerPaper.activeInHierarchy == true)
-            {
-                mainText.text = "You Lose! Play Again?";
-                hasLost = true;
-            }
-            else
-            {
-                Debug.Log("Something happened we did not expect!!!!!!");
-            }
-
-            //handle sounds seperately based on bool conditions 
-            if (hasWon == true)
-            {
-                SimulateClickWin();
-                hasWon = false;
-            }
-
-            if (hasLost == true)
-            {
-                SimulateClickWin();
-                hasLost = false;
+                //AI Wins
+                if (AIRock.activeInHierarchy == true && PlayerScissors.activeInHierarchy == true)
+                {
+                    mainText.text = "You Lose! Play Again?";
+                    hasLost = true;
+                    loseSound.Play();
+                    roundDone = true;
+                }
+                else if (AIPaper.activeInHierarchy == true && PlayerRock.activeInHierarchy == true)
+                {
+                    mainText.text = "You Lose! Play Again?";
+                    hasLost = true;
+                    loseSound.Play();
+                    roundDone = true;
+                }
+                else if (AIScissors.activeInHierarchy == true && PlayerPaper.activeInHierarchy == true)
+                {
+                    mainText.text = "You Lose! Play Again?";
+                    hasLost = true;
+                    loseSound.Play();
+                    roundDone = true;
+                }
+                else
+                {
+                    Debug.Log("Something happened we did not expect!!!!!!");
+                }
             }
 
-            if (hasDrawn == true)
-            {
-                SimulateClickWin();
-                hasDrawn = false;
-            }
+            
+
+            
         }
     }    
         
@@ -139,35 +145,38 @@ public class Gameplay : MonoBehaviour
 
     public void OnRock()
     {
-        
+        clickSound.Play();
         PlayerRock.SetActive(true);
         PlayerPaper.SetActive(false);
         PlayerScissors.SetActive(false);
 
         AIChoice();
         gameStarted = true;
+        roundDone = false;
     }
 
     public void OnPaper()
     {
-
+        clickSound.Play();
         PlayerRock.SetActive(false);
         PlayerPaper.SetActive(true);
         PlayerScissors.SetActive(false);
 
         AIChoice();
         gameStarted = true;
+        roundDone = false;
     }
 
     public void OnScissors()
     {
-
+        clickSound.Play();
         PlayerRock.SetActive(false);
         PlayerPaper.SetActive(false);
         PlayerScissors.SetActive(true);
 
         AIChoice();
         gameStarted = true;
+        roundDone = false;
     }
 
     public void AIChoice()
@@ -194,48 +203,8 @@ public class Gameplay : MonoBehaviour
         }
     }
 
-    public void playClick()
-    {
-        audioSource.PlayOneShot(clickSound, 1.0F);
-    }
+   
 
-    public void playWin()
-    {
-        audioSource.PlayOneShot(winSound, 1.0F);
-    }
-
-    public void playLose()
-    {
-        audioSource.PlayOneShot(loseSound, 1.0F);
-    }
-
-    public void playTie()
-    {
-        audioSource.PlayOneShot(tieSound, 1.0F);
-    }
-
-    private void SimulateClickWin()
-    {
-        if (winButton != null)
-        {
-            ExecuteEvents.Execute(winButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
-        }
-    }
-
-    private void SimulateClickLoss()
-    {
-        if (loseButton != null)
-        {
-            ExecuteEvents.Execute(loseButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
-        }
-    }
-
-    private void SimulateClickTie()
-    {
-        if (tieButton != null)
-        {
-            ExecuteEvents.Execute(tieButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
-        }
-    }
+    
 
 }
